@@ -1,0 +1,227 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    overflow: hidden;
+    background-color: #020202;
+    color: #fff;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+#canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+.overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    z-index: 2;
+    pointer-events: none;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    background: rgba(0, 0, 0, 0.2);
+    padding: 3rem;
+    border-radius: 1rem;
+    backdrop-filter: blur(2px);
+    width: 100%;
+    max-width: 800px;
+}
+
+.greeting-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 3;
+    pointer-events: none;
+}
+
+/* Base style for all greetings */
+.greeting-text {
+    position: relative;
+    /* Changed from absolute to relative to parent wrapper */
+    white-space: nowrap;
+    text-transform: uppercase;
+    font-weight: 800;
+
+    /* Default Gold Fallback */
+    background: linear-gradient(to right, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+
+    opacity: 0;
+    filter: blur(10px);
+
+    will-change: transform, opacity;
+}
+
+/* RICH COLOR PALETTES */
+.color-gold {
+    background: linear-gradient(to right, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c);
+    -webkit-background-clip: text;
+    background-clip: text;
+    text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+}
+
+.color-ruby {
+    background: linear-gradient(to right, #e0115f, #ff69b4, #800020, #ff1493, #e0115f);
+    -webkit-background-clip: text;
+    background-clip: text;
+    text-shadow: 0 0 20px rgba(255, 20, 147, 0.5);
+}
+
+.color-sapphire {
+    background: linear-gradient(to right, #0f52ba, #00bfff, #000080, #1e90ff, #0f52ba);
+    -webkit-background-clip: text;
+    background-clip: text;
+    text-shadow: 0 0 20px rgba(30, 144, 255, 0.5);
+}
+
+.color-amethyst {
+    background: linear-gradient(to right, #9966cc, #da70d6, #4b0082, #ba55d3, #9966cc);
+    -webkit-background-clip: text;
+    background-clip: text;
+    text-shadow: 0 0 20px rgba(186, 85, 211, 0.5);
+}
+
+.color-emerald {
+    background: linear-gradient(to right, #50c878, #00ff7f, #006400, #32cd32, #50c878);
+    -webkit-background-clip: text;
+    background-clip: text;
+    text-shadow: 0 0 20px rgba(50, 205, 50, 0.5);
+}
+
+.color-cyber {
+    background: linear-gradient(to right, #00ffff, #ff00ff, #00ffff, #ff00ff, #00ffff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    text-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+}
+
+/* Entrance Animation + PULSE ZOOM (Z-AXIS) */
+.greeting-visible {
+    animation:
+        scale-in-blur 0.8s cubic-bezier(0.250, 0.460, 0.450, 0.940) both,
+        shine 4s linear infinite,
+        pulse-zoom 2s infinite ease-in-out;
+    /* Smooth Z-axis pulse */
+    background-size: 200% auto;
+    /* Ensure gradient works for shine */
+}
+
+@keyframes scale-in-blur {
+    0% {
+        transform: scale(0.5);
+        filter: blur(10px);
+        opacity: 0;
+    }
+
+    100% {
+        transform: scale(1);
+        filter: blur(0px);
+        opacity: 1;
+    }
+}
+
+@keyframes shine {
+    to {
+        background-position: 200% center;
+    }
+}
+
+/* Z-AXIS BOUNCE (Zoom In/Out) */
+@keyframes pulse-zoom {
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.15);
+        /* Zoom in */
+    }
+}
+
+/* Main English Greeting */
+#new-year-message {
+    font-size: 6rem;
+    /* Slightly larger */
+    z-index: 10;
+}
+
+/* Other languages */
+.secondary-greeting {
+    font-size: 1.5rem;
+    z-index: 5;
+}
+
+p {
+    font-size: 1.5rem;
+    color: #ccc;
+    font-weight: 300;
+    margin-top: 1rem;
+}
+
+/* Countdown Styles */
+.countdown {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+}
+
+.time-unit {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.time-unit span {
+    font-size: 6rem;
+    font-weight: 700;
+    line-height: 1;
+    background: linear-gradient(to bottom, #fff, #aaa);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    font-variant-numeric: tabular-nums;
+}
+
+.time-unit label {
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1rem;
+    color: #aaa;
+    margin-top: 0.5rem;
+}
+
+@media (max-width: 600px) {
+    #new-year-message {
+        font-size: 3rem;
+    }
+
+    .secondary-greeting {
+        font-size: 1rem;
+    }
+
+    .time-unit span {
+        font-size: 3rem;
+    }
+
+    .countdown {
+        gap: 1rem;
+    }
+}

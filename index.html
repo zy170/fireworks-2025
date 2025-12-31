@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gorgeous Fireworks</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <canvas id="canvas"></canvas>
+    <div id="greeting-container" class="greeting-container" style="display: none;">
+        <h1 id="new-year-message">Happy New Year!</h1>
+        <div id="language-subtitle">English</div>
+    </div>
+    <div class="overlay">
+        <!-- <h1 id="new-year-message" style="display: none;">Happy New Year!</h1> MOVED -->
+        <!-- <div id="language-subtitle" style="display: none;">English</div> MOVED -->
+        <div id="countdown" class="countdown">
+            <div class="time-unit"><span id="hours">00</span><label>Hours</label></div>
+            <div class="time-unit"><span id="minutes">00</span><label>Minutes</label></div>
+            <div class="time-unit"><span id="seconds">00</span><label>Seconds</label></div>
+        </div>
+        <p id="instruction" style="display: none;">Click anywhere to launch fireworks</p>
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>
