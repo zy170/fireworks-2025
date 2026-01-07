@@ -179,52 +179,36 @@ let timerTotal = 80;
 let timerTick = 0;
 let mousedown = false;
 let mx, my;
-let isNewYear = false;
+// 修改點1：預設直接開啟新年模式
+let isNewYear = false; 
 
 // Countdown Logic
 const countdownContainer = document.getElementById('countdown');
-const greetingContainer = document.getElementById('greeting-container'); // NEW CONTAINER
+const greetingContainer = document.getElementById('greeting-container'); 
 const newYearMessage = document.getElementById('new-year-message');
 const instruction = document.getElementById('instruction');
 const hoursSpan = document.getElementById('hours');
 const minutesSpan = document.getElementById('minutes');
 const secondsSpan = document.getElementById('seconds');
 
-// Set target to upcoming Jan 1 00:00:00
-const now = new Date();
-// SIMULATION is REMOVED for final product
-// const targetDate = now.getTime() + 5000;
-let targetYear = now.getFullYear() + 1;
-const targetDate = new Date(`Jan 1, ${targetYear} 00:00:00`).getTime();
-
+// 修改點2：直接觸發煙火函式
 function updateCountdown() {
-    const currentTime = new Date().getTime();
-    const distance = targetDate - currentTime;
-
-    if (distance <= 0) {
-        // It's New Year!
-        if (!isNewYear) {
-            isNewYear = true;
-            countdownContainer.style.display = 'none';
-            greetingContainer.style.display = 'block';
-            showAllGreetings(); // Call the static word cloud function
+    // 永遠判斷為「時間到了」
+    if (!isNewYear) {
+        isNewYear = true;
+        
+        // 隱藏倒數計時容器
+        countdownContainer.style.display = 'none';
+        
+        // 隱藏中間的黑色半透明遮罩 (overlay)，讓畫面乾淨
+        const overlay = document.querySelector('.overlay');
+        if (overlay) {
+            overlay.style.display = 'none';
         }
-    } else {
-        isNewYear = false;
 
-        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-        hoursSpan.textContent = hours < 10 ? '0' + hours : hours;
-        minutesSpan.textContent = minutes < 10 ? '0' + minutes : minutes;
-        secondsSpan.textContent = seconds < 10 ? '0' + seconds : seconds;
-
-        // Hide New Year message if it was visible (e.g. going back in time? unlikely but good practice)
-        greetingContainer.style.display = 'none';
-
-        instruction.style.display = 'none';
-        countdownContainer.style.display = 'flex';
+        // 顯示祝福語
+        greetingContainer.style.display = 'block';
+        showAllGreetings(); 
     }
 }
 
@@ -336,6 +320,7 @@ function loop() {
     requestAnimationFrame(loop);
 
     // Update countdown every frame (efficient enough)
+    // 這裡會一直執行，因為我們改寫了函式，所以它會確保一直保持在新年模式
     updateCountdown();
 
     // Increase hue for next cycle to get different colors over time
@@ -386,11 +371,7 @@ function loop() {
         } else {
             limiterTick++;
         }
-    } else {
-        // Optional: Allow manual clicks BEFORE New Year? 
-        // User probably wants to wait. 
-        // Keep it restricted to New Year only for maximum impact.
-    }
+    } 
 }
 
 function createParticles(x, y) {
